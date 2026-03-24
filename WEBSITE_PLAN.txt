@@ -1,0 +1,288 @@
+# Claim Remedy Adjusters — Website Build Plan
+
+## Context
+The client (Claim Remedy Adjusters, Miami Lakes FL) runs a public adjusting firm on a basic GoDaddy site. The goal is a premium, dark-luxury, conversion-focused website that beats out competitors visually and technically — with smooth animations, interactive tools, and SEO built in from the start.
+
+---
+
+## Company Quick Facts
+| Field | Value |
+|---|---|
+| Phone | (786) 223-7867 |
+| Email | craadmin@gmail.com |
+| Address | 7900 Oak Ln #400, Miami Lakes, FL 33016 |
+| Hours | Mon–Fri 9AM–5PM |
+| Service Areas | Miami-Dade, Broward, Palm Beach, Monroe, Collier & Lee, Central/North FL |
+| Services | Storm, Water, Roof, Fire damage + Policy Revision |
+| Social | facebook.com/cradjusters · instagram.com/claimremedyadjusters |
+
+---
+
+## Tech Stack
+| Tool | Purpose |
+|---|---|
+| Next.js 14 (App Router) | Framework |
+| Tailwind CSS | Styling + custom keyframes |
+| Framer Motion | All animations |
+| Lucide React | Icons |
+| React Hook Form + Zod | Forms + validation |
+| Resend | Transactional email |
+| Vercel | Deployment |
+| next/font | Google Fonts (Playfair Display + Inter) |
+
+---
+
+## Design System
+
+### Colors
+```
+Navy Deep   #0A1628   → hero, sections, backgrounds
+Royal Blue  #1B3A6B   → secondary sections
+Gold Accent #C9A84C   → CTAs, headings, borders
+Warm White  #F8F5F0   → light text, light section bg
+Steel Gray  #6B7280   → body copy, subtle elements
+Danger Red  #DC2626   → urgency badges, hurricane banner
+```
+
+### Typography
+- Display/headings: `Playfair Display` (serif, premium)
+- Body: `Inter` (clean, readable)
+
+### Aesthetic
+Dark luxury + glassmorphism. Deep navy backgrounds, gold accents, noise texture overlays, 12–16px border-radius on cards, heavy whitespace.
+
+---
+
+## Site Architecture
+```
+/                    → Home
+/about               → About Us
+/services            → Services Overview
+/services/storm      → Storm Damage
+/services/water      → Water Damage
+/services/roof       → Roof Damage
+/services/fire       → Fire Damage
+/results             → Case Results
+/faq                 → FAQ (searchable accordion)
+/contact             → Contact
+/free-inspection     → High-conversion landing page
+```
+
+---
+
+## File Structure
+```
+/app
+  layout.tsx                   ← fonts, JSON-LD, Navbar, Footer, PageWrapper
+  page.tsx                     ← Home (assembles sections)
+  /about/page.tsx
+  /services/page.tsx
+  /services/[slug]/page.tsx    ← generateStaticParams
+  /results/page.tsx
+  /faq/page.tsx
+  /contact/page.tsx
+  /free-inspection/page.tsx    ← minimal layout (no full nav)
+  /api/contact/route.ts        ← Resend email handler
+
+/components
+  /layout
+    Navbar.tsx                 ← glassmorphism scroll effect
+    Footer.tsx
+    PageWrapper.tsx            ← AnimatePresence route transitions
+  /ui
+    Button.tsx                 ← primary (gold+pulseGlow), secondary, ghost
+    Badge.tsx
+    SectionHeading.tsx         ← h2 + gold underline + subtext
+    Accordion.tsx              ← FAQ expand/collapse
+    CounterStat.tsx            ← animated number counter
+    TestimonialMarquee.tsx     ← infinite CSS scroll carousel
+    BeforeAfterSlider.tsx      ← drag-to-reveal image comparison
+    FloridaMap.tsx             ← SVG county map with hover
+    ClaimCalculator.tsx        ← offer slider → recovery range
+    HurricaneBanner.tsx        ← seasonal urgency strip
+  /forms
+    ContactForm.tsx
+    InspectionForm.tsx
+  /sections
+    Hero.tsx                   ← parallax bg, gradient mesh, CTAs
+    StatsBar.tsx               ← 4 animated counters
+    HowWeWork.tsx              ← 3-step cards
+    ServicesGrid.tsx           ← 4 service image-overlay cards
+    WhyChooseUs.tsx            ← split layout, animated checkmarks
+    Testimonials.tsx           ← wraps TestimonialMarquee
+    FAQTeaser.tsx
+    FinalCTA.tsx               ← Ken Burns bg, big CTA
+
+/data
+  services.ts                  ← Service[] — drives 6 pages
+  testimonials.ts              ← Testimonial[]
+  faqs.ts                      ← FAQ[] grouped by category
+  results.ts                   ← CaseResult[] + percentIncrease()
+  countyMap.ts                 ← Florida SVG path data per county
+
+/lib
+  animations.ts                ← ALL Framer Motion variants (single source of truth)
+  utils.ts                     ← cn(), formatCurrency()
+  metadata.ts                  ← buildMetadata() helper
+
+/public/images
+  hero-bg.jpg · noise.png · adjuster-inspecting.jpg
+  /services/{storm,water,roof,fire}.jpg
+  /before-after/{roof-before,roof-after}.jpg
+  /team/{eddy-gomez,andres-ferras,brandon-ginarte}.jpg
+/public/og/og-default.png      ← 1200x630 OG image
+
+/styles/globals.css            ← @layer base, utilities, .glass, .text-shimmer
+tailwind.config.ts             ← colors, fonts, keyframes, animations
+.env.local                     ← RESEND_API_KEY
+```
+
+---
+
+## 10 Interactive Features
+
+| # | Component | Description |
+|---|---|---|
+| 1 | `CounterStat` | Count-up on scroll using `useMotionValue` + `useSpring` |
+| 2 | `TestimonialMarquee` | Double-array CSS marquee, pause on hover via `group` |
+| 3 | `BeforeAfterSlider` | `motion.div drag="x"` clip-path reveal |
+| 4 | `FloridaMap` | SVG paths per county, gold fill on active service areas |
+| 5 | `ClaimCalculator` | Range slider: offer → 2.1×–3.8× recovery range |
+| 6 | All sections | `staggerContainer` + `fadeUp` via `useInView` (once) |
+| 7 | `Navbar` | `useScroll` → `useTransform` for bg opacity + gold border |
+| 8 | `HurricaneBanner` | Date-conditional (June–Nov), wobble animation on icon |
+| 9 | `Hero` | `useTransform(scrollY, [0,600], [0,180])` parallax layer |
+| 10 | `PageWrapper` | `AnimatePresence` + `pageVariants` on route change |
+
+---
+
+## Animation Variants (`/lib/animations.ts`)
+```ts
+fadeUp         → { opacity:0, y:40 } → { opacity:1, y:0 } 0.6s easeOut
+fadeIn         → { opacity:0 } → { opacity:1 } 0.5s
+slideLeft      → { opacity:0, x:-60 } → { opacity:1, x:0 } 0.7s
+slideRight     → { opacity:0, x:60 }  → { opacity:1, x:0 } 0.7s
+scaleIn        → { opacity:0, scale:0.92 } → { opacity:1, scale:1 } 0.5s
+staggerContainer → staggerChildren:0.12, delayChildren:0.1
+pageVariants   → initial y:12→0, exit y:0→-8
+```
+
+---
+
+## Contact Form API Route
+- `POST /api/contact`
+- Zod validation on server (name, phone, email, address, damageType, message, preferredContact)
+- Sends via `resend.emails.send()` to `craadmin@gmail.com`
+- Requires `RESEND_API_KEY` in env + verified sending domain on Resend DNS
+
+---
+
+## SEO Strategy
+- `buildMetadata()` helper used on every page with canonical URL + OG image
+- `LocalBusiness` JSON-LD in root layout
+- `FAQPage` JSON-LD on `/faq`
+- `app/sitemap.ts` auto-generates sitemap from static + service routes
+- `app/robots.ts` points to sitemap
+- Primary target keywords:
+  - Home: `public adjuster florida`
+  - Storm: `storm damage public adjuster florida`
+  - Water: `water damage insurance claim florida`
+  - Roof: `roof damage claim adjuster florida`
+  - Fire: `fire damage insurance claim florida`
+  - Results: `public adjuster results florida`
+  - FAQ: `public adjuster questions florida`
+
+---
+
+## Build Sequence (54 steps across 10 days)
+
+### Phase 1 — Foundation (Days 1–2)
+1. `npx create-next-app@14` + install deps
+2. `tailwind.config.ts` — colors, fonts, keyframes
+3. `styles/globals.css` — base, utilities, glass, shimmer
+4. `/lib/animations.ts` — all variants
+5. `/lib/utils.ts` + `/lib/metadata.ts`
+6. Populate all `/data/` files
+7. `next/font` setup in `app/layout.tsx`
+8. JSON-LD `<script>` in root layout
+9. `Button.tsx` (3 variants)
+10. `SectionHeading.tsx`
+
+### Phase 2 — Shell (Days 2–3)
+11. `Navbar.tsx` — glassmorphism + mobile hamburger
+12. `Footer.tsx`
+13. `PageWrapper.tsx` — AnimatePresence
+14. Assemble `app/layout.tsx`
+
+### Phase 3 — Home Page (Days 3–5)
+15. `Hero.tsx` — parallax, mesh gradient, dual CTAs
+16. `CounterStat.tsx` + `StatsBar.tsx`
+17. `HowWeWork.tsx`
+18. `ServicesGrid.tsx`
+19. `WhyChooseUs.tsx`
+20. `TestimonialMarquee.tsx`
+21. `ClaimCalculator.tsx`
+22. `FloridaMap.tsx` (source FL county SVG paths first)
+23. `FAQTeaser.tsx` + `Accordion.tsx`
+24. `HurricaneBanner.tsx`
+25. `FinalCTA.tsx`
+26. Assemble `app/page.tsx`
+
+### Phase 4 — Remaining Pages (Days 5–8)
+27. `/about/page.tsx` — story, team cards, licenses, values
+28. `/services/page.tsx` — alternating image blocks
+29. `/services/[slug]/page.tsx` + `ServiceDetail.tsx`
+30. `BeforeAfterSlider.tsx`
+31. `/results/page.tsx` + `ResultCard.tsx`
+32. `/faq/page.tsx` — searchable, grouped accordion
+33. `/contact/page.tsx` — split layout + map iframe
+34. `/free-inspection/page.tsx` — minimal layout, single-focus
+
+### Phase 5 — Forms & API (Days 8–9)
+35. `ContactForm.tsx`
+36. `InspectionForm.tsx`
+37. `/api/contact/route.ts`
+38. End-to-end email test
+39. Success/error state animations
+
+### Phase 6 — SEO + Polish (Days 9–10)
+40. `metadata` export on every page
+41. `FAQPage` JSON-LD on `/faq`
+42. `app/sitemap.ts` + `app/robots.ts`
+43. Full mobile responsiveness pass
+44. Accessibility pass
+45. Image optimization (webp, `next/image`)
+46. Confirm no `noindex` in production
+47. Lighthouse audit — target 90+ Performance, 100 Accessibility
+
+### Phase 7 — Deploy (Day 10)
+48. Push to GitHub
+49. Connect to Vercel
+50. Add `RESEND_API_KEY` in Vercel env vars
+51. Set custom domain → update DNS at registrar
+52. Verify domain + SSL + form test in production
+53. Submit sitemap to Google Search Console
+54. Submit to Bing Webmaster Tools
+
+---
+
+## Pre-Launch Client Checklist
+- [ ] Confirm phone number (786) 223-7867
+- [ ] Confirm sending email (craadmin@gmail.com vs office@cradjusters.com)
+- [ ] Florida public adjuster license number(s) to display
+- [ ] Real case result data for `/data/results.ts`
+- [ ] Google/Facebook review screenshots for testimonials
+- [ ] Team headshots (Eddy Gomez, Andres Ferras, Brandon Ginarte)
+- [ ] Decide CTA language: "Free Inspection" vs "Free Claim Review"
+- [ ] Add Policy Revision as 5th service page? (mentioned in brief, not in slug list)
+- [ ] Resend DNS records on sending domain before go-live
+- [ ] OG image (1200×630) branded graphic for social sharing
+
+---
+
+## Critical Files (Implement First — Everything Depends on These)
+1. `tailwind.config.ts` — design token source of truth
+2. `/lib/animations.ts` — all animation variants, never duplicated
+3. `/components/layout/Navbar.tsx` — first thing visible on every page
+4. `/app/api/contact/route.ts` — only backend surface
+5. `/data/services.ts` — type shape consumed in 6+ places, lock in early
