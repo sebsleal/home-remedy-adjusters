@@ -83,13 +83,15 @@ export default function CustomCursor() {
           y: ringY,
           translateX: '-50%',
           translateY: '-50%',
+          backgroundColor: 'rgba(0,0,0,0)',
         }}
+        initial={{ width: 36, height: 36, opacity: 1, borderColor: 'rgba(216,183,121,0.5)', backgroundColor: 'rgba(0,0,0,0)' }}
         animate={{
           width: hovering ? 52 : clicking ? 28 : 36,
           height: hovering ? 52 : clicking ? 28 : 36,
           opacity: 1,
           borderColor: hovering ? 'rgba(216,183,121,0.9)' : 'rgba(216,183,121,0.5)',
-          backgroundColor: hovering ? 'rgba(216,183,121,0.08)' : 'transparent',
+          backgroundColor: hovering ? 'rgba(216,183,121,0.08)' : 'rgba(0,0,0,0)',
         }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
       />
