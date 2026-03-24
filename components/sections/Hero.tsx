@@ -30,7 +30,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center overflow-hidden pt-16"
+      className="relative min-h-screen flex items-center overflow-hidden pt-28"
     >
       {/* Animated teal gradient mesh background */}
       <div

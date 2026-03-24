@@ -5,7 +5,11 @@ import { CloudLightning, X } from 'lucide-react'
 import { useState } from 'react'
 import Link from 'next/link'
 
-export default function HurricaneBanner() {
+interface HurricaneBannerProps {
+  onDismiss?: () => void
+}
+
+export default function HurricaneBanner({ onDismiss }: HurricaneBannerProps) {
   const [dismissed, setDismissed] = useState(false)
 
   const month = new Date().getMonth() + 1
@@ -17,8 +21,13 @@ export default function HurricaneBanner() {
 
   if (dismissed) return null
 
+  const handleDismiss = () => {
+    setDismissed(true)
+    onDismiss?.()
+  }
+
   return (
-    <div className="relative bg-gradient-to-r from-danger/90 via-red-700/90 to-danger/90 py-2.5 px-4 flex items-center justify-center gap-3 text-white z-[60]">
+    <div className="relative bg-gradient-to-r from-danger/90 via-red-700/90 to-danger/90 py-2.5 px-4 flex items-center justify-center gap-3 text-white">
       <motion.div
         animate={{ rotate: [0, -10, 10, -5, 5, 0] }}
         transition={{ repeat: Infinity, duration: 3, repeatDelay: 2 }}
@@ -33,7 +42,7 @@ export default function HurricaneBanner() {
         Free Inspection →
       </Link>
       <button
-        onClick={() => setDismissed(true)}
+        onClick={handleDismiss}
         className="absolute right-3 text-white/60 hover:text-white transition-colors cursor-none"
         aria-label="Dismiss"
       >

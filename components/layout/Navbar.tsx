@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Phone, Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import HurricaneBanner from '@/components/ui/HurricaneBanner'
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -17,9 +18,13 @@ const navLinks = [
   { label: 'Contact', href: '/contact' },
 ]
 
+// Approximate banner height in px
+const BANNER_H = 40
+
 export default function Navbar() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [bannerVisible, setBannerVisible] = useState(true)
   const { scrollY } = useScroll()
 
   const bgOpacity = useTransform(scrollY, [0, 80], [0, 0.92])
@@ -28,12 +33,20 @@ export default function Navbar() {
   // Close mobile menu on route change
   useEffect(() => { setMenuOpen(false) }, [pathname])
 
+  const navbarH = 64 // h-16
+  const drawerTop = (bannerVisible ? BANNER_H : 0) + navbarH
+
   return (
     <>
-      <motion.header
-        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md"
-        style={{ backgroundColor: `rgba(5,25,26,${bgOpacity})` }}
-      >
+      {/* Single fixed container: banner on top, navbar below */}
+      <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
+        {bannerVisible && (
+          <HurricaneBanner onDismiss={() => setBannerVisible(false)} />
+        )}
+        <motion.header
+          className="backdrop-blur-md relative"
+          style={{ backgroundColor: `rgba(5,25,26,${bgOpacity})` }}
+        >
         {/* Gold border that fades in on scroll */}
         <motion.div
           className="absolute bottom-0 left-0 right-0 h-px bg-gold/40"
@@ -103,7 +116,8 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-      </motion.header>
+        </motion.header>
+      </div>
 
       {/* Mobile drawer */}
       <AnimatePresence>
@@ -113,7 +127,8 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed top-16 left-0 right-0 z-40 glass border-b border-gold/20"
+            className="fixed left-0 right-0 z-40 glass border-b border-gold/20"
+            style={{ top: `${drawerTop}px` }}
           >
             <nav className="container-cra py-6 flex flex-col gap-5">
               {navLinks.map((link) => (

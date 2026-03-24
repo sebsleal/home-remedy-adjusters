@@ -1,6 +1,5 @@
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import HurricaneBanner from '@/components/ui/HurricaneBanner'
 import Hero from '@/components/sections/Hero'
 import StatsBar from '@/components/sections/StatsBar'
 import Specializations from '@/components/sections/Specializations'
@@ -23,7 +22,6 @@ export const metadata = buildMetadata({
 export default function HomePage() {
   return (
     <>
-      <HurricaneBanner />
       <Navbar />
       <main>
         <Hero />
