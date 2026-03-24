@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "WebFetch(domain:claimremedyadjusters.com)",
+      "Bash(curl -L \"https://img1.wsimg.com/isteam/ip/83ae5347-59a2-439f-aa69-469b821148ab/blob-a95a34f.png\" -o \"/c/Users/sn6w/OneDrive/Desktop/home remedy adjusters/website/public/images/cra-logo.png\")",
+      "Bash(head -20 grep -n \"hero-bg\\\\|adjuster-inspecting\\\\|services/\" \"/c/Users/sn6w/OneDrive/Desktop/home remedy adjusters/website/components/sections/Specializations.tsx\")"
+    ]
+  }
+}
