@@ -8,7 +8,12 @@
       "Bash(netstat -ano)",
       "Bash(taskkill /PID 10912 /F)",
       "Bash(cmd /c \"taskkill /PID 10912 /F\")",
-      "Bash(npm --version)"
+      "Bash(npm --version)",
+      "mcp__439f55b9-b5da-4b58-9b65-d0dc5834dc96__list_teams",
+      "mcp__439f55b9-b5da-4b58-9b65-d0dc5834dc96__list_projects",
+      "mcp__439f55b9-b5da-4b58-9b65-d0dc5834dc96__deploy_to_vercel",
+      "Bash(npx vercel:*)",
+      "mcp__439f55b9-b5da-4b58-9b65-d0dc5834dc96__get_deployment_build_logs"
     ]
   }
 }
