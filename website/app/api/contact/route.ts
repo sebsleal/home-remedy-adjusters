@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { z } from 'zod'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 const schema = z.object({
   name: z.string().min(2),
   phone: z.string().min(10),
@@ -27,6 +25,7 @@ export async function POST(req: Request) {
     }
 
     const d = parsed.data
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     const damageLabels: Record<string, string> = {
       storm: 'Storm / Hurricane',
