@@ -27,6 +27,7 @@
   body {
     @apply font-inter text-off-white bg-teal-950 antialiased;
     cursor: auto;
+    overflow-x: hidden;
   }
 
   /* Restore cursor on touch devices */
