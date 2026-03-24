@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRA | Premium Website Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal-950: #05191a;
+      --teal-900: #082326;
+      --teal-850: #0c2d31;
+      --teal-800: #11383d;
+      --charcoal: #171d21;
+      --off-white: #f4f1e8;
+      --muted-ivory: #d9d1c1;
+      --gold: #d8b779;
+      --gold-soft: #bc9a5f;
+      --glass: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(216, 183, 121, 0.34);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(circle at 18% 30%, rgba(216, 183, 121, 0.16), transparent 38%),
+        radial-gradient(circle at 88% 18%, rgba(130, 182, 174, 0.17), transparent 28%),
+        linear-gradient(130deg, var(--teal-950) 8%, var(--teal-900) 45%, var(--charcoal) 100%);
+      color: var(--off-white);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .studio-haze {
+      position: fixed;
+      inset: -10%;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 52% 48%, rgba(255, 233, 191, 0.07), transparent 46%),
+        radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.5), transparent 55%);
+      filter: blur(6px);
+    }
+
+    .scene {
+      width: min(1380px, 95vw);
+      aspect-ratio: 16 / 10;
+      position: relative;
+      perspective: 1200px;
+    }
+
+    .floor-reflection {
+      position: absolute;
+      inset: auto 14% -6% 14%;
+      height: 20%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(178, 206, 205, 0.24), transparent 70%);
+      filter: blur(25px);
+    }
+
+    .monitor {
+      position: absolute;
+      inset: 4% 6%;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #0b0f12, #11181f);
+      padding: 14px;
+      box-shadow:
+        0 55px 90px rgba(0, 0, 0, 0.6),
+        0 6px 20px rgba(0, 0, 0, 0.45),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+      transform: rotateX(5deg) rotateY(-7deg);
+    }
+
+    .screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      background:
+        linear-gradient(120deg, rgba(5, 29, 32, 0.95) 5%, rgba(8, 42, 46, 0.92) 42%, rgba(12, 50, 52, 0.9) 100%),
+        url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=80") center/cover;
+      isolation: isolate;
+    }
+
+    .screen::before,
+    .screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .screen::before {
+      background:
+        linear-gradient(115deg, rgba(216, 183, 121, 0.15), transparent 35%),
+        radial-gradient(circle at 25% 45%, rgba(255, 255, 255, 0.08), transparent 30%);
+      mix-blend-mode: screen;
+    }
+
+    .screen::after {
+      background-image:
+        linear-gradient(115deg, transparent 16%, rgba(216, 183, 121, 0.12) 16.3%, transparent 16.7%),
+        linear-gradient(112deg, transparent 58%, rgba(216, 183, 121, 0.1) 58.2%, transparent 58.6%);
+      opacity: 0.6;
+    }
+
+    .web-ui {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      grid-template-rows: auto 1fr;
+      gap: 22px;
+      height: 100%;
+      padding: 20px 26px 18px;
+      backdrop-filter: blur(1.6px);
+    }
+
+    .nav {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0 10px;
+      border-bottom: 1px solid rgba(216, 183, 121, 0.24);
+      font-size: 12px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted-ivory);
+    }
+
+    .brand {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      letter-spacing: 0.14em;
+      font-size: 21px;
+      color: var(--gold);
+    }
+
+    .nav ul {
+      list-style: none;
+      display: flex;
+      gap: 16px;
+      opacity: 0.94;
+    }
+
+    .phone {
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+      border-radius: 16px;
+      padding: 34px;
+      background:
+        linear-gradient(145deg, rgba(12, 43, 47, 0.64), rgba(7, 31, 34, 0.55)),
+        rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(216, 183, 121, 0.24);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80") center/cover;
+      filter: blur(1px) brightness(0.6) saturate(0.85);
+      transform: scale(1.06);
+      opacity: 0.34;
+      z-index: -2;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, rgba(2, 17, 20, 0.8), rgba(8, 45, 49, 0.35));
+      z-index: -1;
+    }
+
+    h1 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(30px, 3.05vw, 50px);
+      line-height: 1.02;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      max-width: 13ch;
+      color: var(--off-white);
+      text-wrap: balance;
+    }
+
+    .subheadline {
+      font-size: 17px;
+      max-width: 38ch;
+      line-height: 1.55;
+      color: #e5dccd;
+    }
+
+    .cta {
+      width: fit-content;
+      text-decoration: none;
+      padding: 13px 24px;
+      border-radius: 999px;
+      background: linear-gradient(130deg, #e2c48a, var(--gold-soft));
+      color: #112125;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      box-shadow: 0 7px 18px rgba(216, 183, 121, 0.35);
+    }
+
+    .right-column {
+      display: grid;
+      grid-template-rows: auto auto auto auto;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 13px;
+      padding: 14px 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(8px);
+    }
+
+    .card h3 {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 11px;
+      color: var(--gold);
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 10px 11px;
+      border-radius: 10px;
+      background: rgba(7, 26, 29, 0.7);
+      border: 1px solid rgba(216, 183, 121, 0.26);
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: 0.03em;
+    }
+
+    .process-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .process-item {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 9px;
+      border-radius: 9px;
+      background: rgba(8, 31, 34, 0.65);
+      font-size: 11.5px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #f6e1b7, #b78f50 70%);
+      box-shadow: 0 0 0 3px rgba(216, 183, 121, 0.18);
+      justify-self: center;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #efe8da;
+    }
+
+    .trust-grid div {
+      border-radius: 10px;
+      padding: 10px 8px;
+      text-align: center;
+      background: rgba(9, 31, 33, 0.75);
+      border: 1px solid rgba(216, 183, 121, 0.25);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      color: #cfccb9;
+      padding-inline: 2px;
+    }
+
+    .footer strong {
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .monitor-reflection {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      pointer-events: none;
+      background:
+        linear-gradient(105deg, rgba(255, 255, 255, 0.1) 2%, transparent 18%),
+        linear-gradient(140deg, transparent 74%, rgba(255, 255, 255, 0.08) 98%);
+      mix-blend-mode: screen;
+    }
+
+    .stand {
+      position: absolute;
+      left: 50%;
+      bottom: -4.5%;
+      width: 140px;
+      height: 66px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, #2b3238, #161c21);
+      clip-path: polygon(22% 0, 78% 0, 100% 100%, 0 100%);
+      filter: drop-shadow(0 12px 10px rgba(0, 0, 0, 0.5));
+    }
+
+    .base {
+      position: absolute;
+      left: 50%;
+      bottom: -8%;
+      width: 300px;
+      height: 20px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: linear-gradient(180deg, #2a3138, #14191d);
+      box-shadow: 0 14px 25px rgba(0, 0, 0, 0.55);
+    }
+
+    @media (max-width: 1200px) {
+      .scene { aspect-ratio: auto; height: 90vh; }
+      .web-ui { grid-template-columns: 1fr; overflow-y: auto; }
+      .hero { min-height: 390px; }
+      .right-column { grid-template-rows: repeat(4, auto); }
+      .monitor { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="studio-haze"></div>
+
+  <main class="scene" aria-label="Cinematic desktop monitor presentation of premium CRA website mockup">
+    <div class="floor-reflection"></div>
+
+    <section class="monitor">
+      <article class="screen">
+        <div class="web-ui">
+          <nav class="nav">
+            <div class="brand">CRA / CLAIM REMEDY ADJUSTERS</div>
+            <ul>
+              <li>Home</li>
+              <li>About Us</li>
+              <li>Services</li>
+              <li>Results</li>
+              <li>FAQ</li>
+              <li>Contact</li>
+            </ul>
+            <div class="phone">(786) 223-7867</div>
+          </nav>
+
+          <section class="hero">
+            <h1>YOUR REMEDY FOR INSURANCE COMPLEXITY.</h1>
+            <p class="subheadline">Your Insurance Has a Team. Now You Do Too.</p>
+            <a href="#" class="cta">Book Your Free Claim Review</a>
+          </section>
+
+          <aside class="right-column">
+            <section class="card">
+              <h3>Our Specializations</h3>
+              <div class="service-grid">
+                <div class="pill">Hurricane</div>
+                <div class="pill">Water</div>
+                <div class="pill">Roof</div>
+                <div class="pill">Fire</div>
+              </div>
+            </section>
+
+            <section class="card">
+              <h3>Framework for Success</h3>
+              <div class="process-list">
+                <div class="process-item"><span class="dot"></span>Policy Review &amp; Revision</div>
+                <div class="process-item"><span class="dot"></span>Damage Documentation</div>
+                <div class="process-item"><span class="dot"></span>Estimation &amp; Reporting</div>
+                <div class="process-item"><span class="dot"></span>Insurer Negotiation</div>
+                <div class="process-item"><span class="dot"></span>Maximized Settlement</div>
+              </div>
+            </section>
+
+            <section class="card">
+              <h3>Trusted Florida Leaders</h3>
+              <div class="trust-grid">
+                <div>Licensed Public Adjusters</div>
+                <div>No Upfront Cost</div>
+                <div>10+ Years Claim Experience</div>
+              </div>
+            </section>
+
+            <footer class="footer">
+              <span><strong>Miami Lakes HQ</strong> · 7900 Oak Ln #400</span>
+              <span>office@cradjusters.com</span>
+            </footer>
+          </aside>
+        </div>
+      </article>
+      <div class="monitor-reflection"></div>
+    </section>
+
+    <div class="stand"></div>
+    <div class="base"></div>
+  </main>
+</body>
+</html>
