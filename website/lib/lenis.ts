@@ -2,10 +2,10 @@ import Lenis from '@studio-freight/lenis'
 
 export function createLenis(): Lenis {
   return new Lenis({
-    duration: 0.5,
-    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    duration: 0.4,
+    easing: (t: number) => 1 - Math.pow(1 - t, 3),
     smoothWheel: true,
-    wheelMultiplier: 1.5,
+    wheelMultiplier: 1.8,
     touchMultiplier: 2,
   })
 }
