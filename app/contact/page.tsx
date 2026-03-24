@@ -16,15 +16,38 @@ export default function ContactPage() {
     <>
       <Navbar />
       <main>
-        <section className="pt-32 pb-16 bg-teal-950">
-          <div className="container-cra">
+        <section className="relative pt-32 pb-6 bg-teal-950 overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gold/5 blur-3xl" />
+            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-teal-800/30 blur-3xl" />
+          </div>
+          <div className="container-cra relative z-10">
             <span className="label">Get In Touch</span>
             <h1 className="font-cormorant font-600 text-[clamp(32px,4.5vw,58px)] tracking-heading uppercase text-off-white leading-tight mt-3 max-w-xl">
               Let&apos;s Talk About Your Claim.
             </h1>
-            <div className="block w-10 h-px bg-gold mt-5" />
+            <div className="block w-12 h-[2px] bg-gold mt-5" />
           </div>
         </section>
+
+        {/* Trust stats */}
+        <div className="bg-teal-950 pb-2">
+          <div className="container-cra">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border border-teal-800 rounded-2xl p-6">
+              {[
+                { value: '$12M+', label: 'Total Recovered' },
+                { value: '500+', label: 'Claims Handled' },
+                { value: '98%', label: 'Satisfaction Rate' },
+                { value: '10+', label: 'Years Experience' },
+              ].map(({ value, label }) => (
+                <div key={label} className="text-center">
+                  <p className="font-cormorant font-600 text-[28px] text-gold leading-none">{value}</p>
+                  <p className="font-inter font-300 text-[11px] text-ivory/50 uppercase tracking-label mt-1">{label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
         <section className="section-pad bg-teal-900">
           <div className="container-cra">

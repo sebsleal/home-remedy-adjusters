@@ -77,15 +77,19 @@ export default function ResultsPage() {
       <Navbar />
       <main>
         {/* Header */}
-        <section className="pt-32 pb-12 bg-teal-950">
-          <div className="container-cra">
+        <section className="relative pt-32 pb-8 bg-teal-950 overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gold/5 blur-3xl" />
+            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-teal-800/30 blur-3xl" />
+          </div>
+          <div className="container-cra relative z-10">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
               <div>
                 <span className="label">Track Record</span>
                 <h1 className="font-cormorant font-600 text-[clamp(40px,6vw,80px)] tracking-heading uppercase text-off-white leading-[0.95] mt-3">
                   CASE<br />RESULTS.
                 </h1>
-                <div className="block w-10 h-px bg-gold mt-5" />
+                <div className="block w-12 h-[2px] bg-gold mt-5" />
               </div>
               {/* Filter bar */}
               <div className="flex flex-wrap gap-2">
@@ -108,7 +112,7 @@ export default function ResultsPage() {
         </section>
 
         {/* Editorial grid */}
-        <section className="section-pad bg-teal-950">
+        <section className="pt-10 md:pt-14 pb-20 md:pb-28 lg:pb-36 bg-teal-950">
           <div className="container-cra">
             <AnimatePresence mode="wait">
               <motion.div

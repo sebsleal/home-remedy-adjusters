@@ -21,10 +21,10 @@ export default function Footer() {
   return (
     <footer className="bg-charcoal border-t border-teal-800">
       <div className="container-cra py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
 
           {/* Brand */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 col-span-2 md:col-span-1">
             <Link href="/" className="inline-block">
               <span className="font-cormorant font-600 text-[28px] tracking-heading text-off-white uppercase">
                 CRA

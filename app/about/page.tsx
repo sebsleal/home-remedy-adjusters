@@ -3,6 +3,7 @@ import Footer from '@/components/layout/Footer'
 import SectionHeading from '@/components/ui/SectionHeading'
 import TrustBar from '@/components/sections/TrustBar'
 import FinalCTA from '@/components/sections/FinalCTA'
+import Button from '@/components/ui/Button'
 import { buildMetadata } from '@/lib/metadata'
 import { Shield, Users, Target, Heart } from 'lucide-react'
 
@@ -34,15 +35,24 @@ export default function AboutPage() {
         {/* Hero */}
         <section className="relative pt-32 pb-20 bg-teal-950 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-teal-900/50 to-teal-950" />
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gold/5 blur-3xl" />
+            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-teal-800/30 blur-3xl" />
+          </div>
           <div className="container-cra relative z-10">
             <span className="label">About Us</span>
             <h1 className="font-cormorant font-600 text-[clamp(36px,5vw,64px)] tracking-heading uppercase text-off-white leading-tight mt-3 max-w-2xl">
               Leveling The Playing Field For Florida Homeowners.
             </h1>
-            <div className="block w-10 h-px bg-gold mt-5 mb-6" />
+            <div className="block w-12 h-[2px] bg-gold mt-5 mb-6" />
             <p className="font-inter font-300 text-[16px] text-ivory leading-relaxed max-w-xl">
               Claim Remedy Adjusters was founded on a simple belief: every homeowner deserves the same quality of professional representation that insurance companies already have.
             </p>
+            <div className="mt-8">
+              <Button href="/free-inspection" variant="secondary" size="md">
+                Book Free Consultation →
+              </Button>
+            </div>
           </div>
         </section>
 
@@ -91,9 +101,16 @@ export default function AboutPage() {
               {team.map(({ name, title, image }) => (
                 <div key={name} className="glass rounded-2xl overflow-hidden group">
                   <div
-                    className="h-64 bg-cover bg-center bg-teal-800 transition-transform duration-500 group-hover:scale-105"
+                    className="h-64 bg-cover bg-center bg-teal-800 relative transition-transform duration-500 group-hover:scale-105"
                     style={{ backgroundImage: `url('${image}')` }}
-                  />
+                  >
+                    {/* Initials fallback — shows when photo is not yet available */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="font-cormorant font-600 text-[56px] text-gold/25 select-none">
+                        {name.split(' ').map((n: string) => n[0]).join('')}
+                      </span>
+                    </div>
+                  </div>
                   <div className="p-5">
                     <h3 className="font-cormorant font-600 text-[20px] tracking-heading uppercase text-off-white">{name}</h3>
                     <p className="font-inter font-300 text-[12px] text-gold/70 uppercase tracking-label mt-1">{title}</p>
