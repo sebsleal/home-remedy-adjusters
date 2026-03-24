@@ -22,12 +22,14 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
     @apply font-inter text-off-white bg-teal-950 antialiased;
     cursor: auto;
     overflow-x: hidden;
+    max-width: 100%;
   }
 
   /* Restore cursor on touch devices */

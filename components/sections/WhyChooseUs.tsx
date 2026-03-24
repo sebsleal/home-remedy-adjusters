@@ -22,7 +22,7 @@ export default function WhyChooseUs() {
   const isInView = useInView(ref as React.RefObject<Element>, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="section-pad bg-teal-950">
+    <section ref={ref} className="section-pad bg-teal-950 overflow-x-hidden">
       <div className="container-cra">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
 
