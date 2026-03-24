@@ -12,12 +12,12 @@ export default function CustomCursor() {
   const mouseY = useMotionValue(-100)
 
   // Dot: snappy follow
-  const dotX = useSpring(mouseX, { stiffness: 600, damping: 40 })
-  const dotY = useSpring(mouseY, { stiffness: 600, damping: 40 })
+  const dotX = useSpring(mouseX, { stiffness: 800, damping: 60 })
+  const dotY = useSpring(mouseY, { stiffness: 800, damping: 60 })
 
-  // Ring: smooth delayed follow
-  const ringX = useSpring(mouseX, { stiffness: 120, damping: 20 })
-  const ringY = useSpring(mouseY, { stiffness: 120, damping: 20 })
+  // Ring: tight follow — high stiffness prevents motion sickness
+  const ringX = useSpring(mouseX, { stiffness: 600, damping: 50 })
+  const ringY = useSpring(mouseY, { stiffness: 600, damping: 50 })
 
   useEffect(() => {
     // Only activate on pointer: fine devices (non-touch)
@@ -77,22 +77,30 @@ export default function CustomCursor() {
     <>
       {/* Outer ring */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full border border-gold/60"
+        className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full border"
         style={{
           x: ringX,
           y: ringY,
           translateX: '-50%',
           translateY: '-50%',
         }}
+        initial={{ width: 36, height: 36, opacity: 1, borderColor: 'rgba(216,183,121,0.5)' }}
         animate={{
           width: hovering ? 52 : clicking ? 28 : 36,
           height: hovering ? 52 : clicking ? 28 : 36,
           opacity: 1,
           borderColor: hovering ? 'rgba(216,183,121,0.9)' : 'rgba(216,183,121,0.5)',
-          backgroundColor: hovering ? 'rgba(216,183,121,0.08)' : 'transparent',
         }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
-      />
+      >
+        {/* Fill: use opacity to avoid animating 'transparent' */}
+        <motion.span
+          className="absolute inset-0 rounded-full bg-gold/[0.08]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: hovering ? 1 : 0 }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
+        />
+      </motion.div>
       {/* Inner dot */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full bg-gold"
