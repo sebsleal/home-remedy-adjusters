@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Phone, Menu, X } from 'lucide-react'
@@ -42,13 +43,14 @@ export default function Navbar() {
         <div className="container-cra flex items-center justify-between h-16 md:h-18">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group" data-cursor="magnetic">
-            <span className="font-cormorant font-600 text-[22px] tracking-heading text-off-white group-hover:text-gold transition-colors duration-300 uppercase">
-              CRA
-            </span>
-            <span className="hidden md:block w-px h-4 bg-gold/30" />
-            <span className="hidden md:block font-inter font-300 text-[10px] uppercase tracking-label text-ivory/60 group-hover:text-gold/60 transition-colors duration-300">
-              Claim Remedy Adjusters
-            </span>
+            <Image
+              src="/images/cra-logo.png"
+              alt="Claim Remedy Adjusters"
+              width={120}
+              height={48}
+              className="h-10 w-auto object-contain brightness-0 invert group-hover:brightness-[0.85] group-hover:sepia group-hover:saturate-[3] group-hover:hue-rotate-[5deg] transition-all duration-300"
+              priority
+            />
           </Link>
 
           {/* Desktop nav */}
