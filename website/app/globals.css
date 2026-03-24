@@ -26,7 +26,7 @@
 
   body {
     @apply font-inter text-off-white bg-teal-950 antialiased;
-    cursor: none;
+    cursor: auto;
   }
 
   /* Restore cursor on touch devices */
@@ -34,6 +34,14 @@
     body {
       cursor: auto;
     }
+  }
+
+  /*
+    Many components were authored with `cursor-none` while a custom cursor
+    was active globally. Keep the native cursor available for usability.
+  */
+  .cursor-none {
+    cursor: auto !important;
   }
 
   /* Reduced motion: disable custom scroll + animations */

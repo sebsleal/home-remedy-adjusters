@@ -5,7 +5,6 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import FinalCTA from '@/components/sections/FinalCTA'
 import Accordion from '@/components/ui/Accordion'
-import { buildMetadata } from '@/lib/metadata'
 import { faqs, faqCategories } from '@/data/faqs'
 import { Search } from 'lucide-react'
 

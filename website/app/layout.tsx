@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import './globals.css'
-import SmoothScroll from '@/components/layout/SmoothScroll'
-import CustomCursor from '@/components/layout/CustomCursor'
 import PageWrapper from '@/components/layout/PageWrapper'
 
 const cormorant = Cormorant_Garamond({
@@ -92,12 +90,9 @@ export default function RootLayout({
         />
       </head>
       <body className="font-inter text-off-white bg-teal-950 antialiased">
-        <SmoothScroll>
-          <CustomCursor />
-          <PageWrapper>
-            {children}
-          </PageWrapper>
-        </SmoothScroll>
+        <PageWrapper>
+          {children}
+        </PageWrapper>
       </body>
     </html>
   )
